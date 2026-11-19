@@ -12,6 +12,7 @@ export type StagedFiles = {
 	logo: string | null;
 	music: { src: string; bpm: number | null; offset: number; builtin: boolean } | null;
 	identity: ShowcaseProps['identity'];
+	presenter?: ShowcaseProps['presenter'];
 };
 
 /**
@@ -83,6 +84,7 @@ export const resolveProps = (opts: {
 			syncOffsetFrames: 1,
 		},
 		identity: opts.files.identity,
+		presenter: opts.files.presenter ?? null,
 		capture: manifest,
 		debug: { safeArea: Boolean(opts.debugSafeArea) },
 	};

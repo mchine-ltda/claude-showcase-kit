@@ -3,6 +3,7 @@ import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from 'remo
 import { linearTiming, TransitionSeries } from '@remotion/transitions';
 import { Soundtrack } from './audio/Soundtrack';
 import { Backdrop } from './components/Backdrop';
+import { PresenterLayer } from './components/PresenterLayer';
 import { SafeAreaGuide } from './components/SafeAreaGuide';
 import { Subtitles } from './components/Subtitles';
 import type { SegmentKey, ShowcaseProps } from './schema';
@@ -12,7 +13,7 @@ import { OutroScene } from './scenes/OutroScene';
 import { WalkthroughScene } from './scenes/WalkthroughScene';
 import { TypeProvider } from './theme/identity';
 import type { TextLines } from './theme/text-layout';
-import { buildTimeline, type ScenePlan, type Timeline } from './timeline';
+import { buildTimeline, outroSignatureDelay, type ScenePlan, type Timeline } from './timeline';
 import { depthDissolve } from './transitions/depthDissolve';
 import { pushSlide } from './transitions/pushSlide';
 
@@ -58,9 +59,10 @@ export const Showcase: React.FC<ShowcaseRenderProps> = (props) => {
 						return nodes;
 					})}
 				</TransitionSeries>
+				<PresenterLayer props={props} timeline={timeline} />
 				{props.subtitles.enabled ? (
 					// With a cover lockup the title is already on screen, and the cover frame stays clean.
-					<Subtitles lines={props.cover?.enabled ? timeline.lines.filter((l) => l.line.segment !== 'intro') : timeline.lines} format={props.format} />
+					<Subtitles lines={props.cover?.enabled && !props.presenter ? timeline.lines.filter((l) => l.line.segment !== 'intro') : timeline.lines} format={props.format} />
 				) : null}
 				<Soundtrack props={props} timeline={timeline} />
 				{props.debug.safeArea ? <SafeAreaGuide format={props.format} /> : null}
@@ -87,7 +89,7 @@ const SceneSwitch: React.FC<{
 		case 'mobile':
 			return <WalkthroughScene plan={plan} props={props} device="mobile" steps={timeline.steps.mobile} />;
 		case 'outro':
-			return <OutroScene plan={plan} props={props} cta={layout.cta} />;
+			return <OutroScene plan={plan} props={props} cta={layout.cta} signatureDelay={props.presenter ? outroSignatureDelay(timeline, plan) : 0} />;
 	}
 };
 

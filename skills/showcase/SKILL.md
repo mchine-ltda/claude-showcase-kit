@@ -1,6 +1,6 @@
 ---
 name: showcase
-description: Turn real digital work (a website, web app, mobile app, automation or brand identity in the current repository) into a narrated, cinematic Instagram Reel (1080x1920 MP4, ~25 s) plus its Instagram cover, by recording the real thing with Playwright and rendering it with the Claude Showcase Kit engine. Interviews the user with short multiple-choice rounds, keeps every post in one consistent portfolio style, and checks how the new cover fits the profile grid. Use when the user asks for a showcase video, portfolio reel, Instagram Reel or cover, case-study or promo video of something they built.
+description: Turn real digital work (a website, web app, mobile app, automation or brand identity) into a narrated, cinematic Instagram Reel and Instagram cover with the Claude Showcase Kit. Ask whether the user wants an on-camera presenter or a voice-over-only Reel. In presenter mode, write a recording or avatar-generation prompt and wait for their footage before editing. Use for showcase videos, portfolio Reels, Instagram covers, case studies and promos of real projects.
 when_to_use: Requests like "make a showcase of this", "Instagram reel for this project", "portfolio video for this site/app/automation/brand", "/showcase", "/showcase https://client.ie".
 argument-hint: "[URL, project name or notes]"
 allowed-tools: Bash(node "${CLAUDE_SKILL_DIR}/scripts/showcase.mjs" *)
@@ -8,7 +8,7 @@ allowed-tools: Bash(node "${CLAUDE_SKILL_DIR}/scripts/showcase.mjs" *)
 
 # Showcase
 
-Make a premium, faceless portfolio Reel of the work in the current repository with the **Claude
+Make a premium portfolio Reel of the work in the current repository with the **Claude
 Showcase Kit** engine. The engine is a separate application (its folder is in `engine.json` next to
 this file). It owns the template, capture, voice, music, cover, QA and the portfolio registry. This
 repository only provides the work. **Never copy the engine into this repo. Never modify this repo**
@@ -16,6 +16,23 @@ repository only provides the work. **Never copy the engine into this repo. Never
 specific change.
 
 Arguments: `$ARGUMENTS` (a URL, the client's name, the kind of project or notes; may be empty).
+
+## Choose the presenter format
+
+Before capture or production, ask “How would you like the Reel presented?” in the user’s language.
+Use AskUserQuestion if available, otherwise ask in chat. If the user already made an explicit choice,
+use it and continue.
+
+- **Voice-over only (Recommended)** — Use the existing generated narration and device walkthrough.
+- **On-camera presenter** — Use the person or avatar's recording for the narration. Show them in the
+  opening and closing cards, with the real walkthrough and their voice in between.
+
+Wait for the choice. For **voice-over only**, continue through the usual interview and workflow.
+For **on-camera presenter**, read [PRESENTER.md](PRESENTER.md) and prepare the recording brief first.
+Use read-only inspection to ground the walkthrough and script. Deliver the copy-ready recording or
+generation prompt and wait for the footage before initialising the project, recording the walkthrough
+or rendering previews. If the user already supplied usable presenter footage, inspect it and confirm
+its spoken script against the walkthrough before proceeding.
 
 ## The engine
 
@@ -50,8 +67,8 @@ what is recorded:
 | `automation` | The trigger (a form, an email, a new row), the workflow running, the result in each app, joined by cuts | Desktop ~20 s |
 | `branding` | The brand guidelines or brand site: logo, palette, type, applications, with cuts | Desktop ~20 s |
 
-The look comes from the template and the agency's identity, never from the project:
-[STYLE-GUIDE.md](STYLE-GUIDE.md). Adapt only the work, the narration and the real interactions.
+The template and the agency's identity define the look. See [STYLE-GUIDE.md](STYLE-GUIDE.md).
+Adapt the walkthrough, narration and the presenter's framing to the material.
 
 ## The interview
 
@@ -62,7 +79,8 @@ Ask before you decide. Use the **AskUserQuestion** tool for every round:
 - one line of description per option;
 - the user can always type their own answer.
 
-Base the options on what you found in the repository, never on guesses. Keep it to three rounds.
+Base the options on what you found in the repository. Keep the creative interview to the three
+rounds below, after the presenter-format question.
 
 **Round 1: the project.** Ask this after a quick read of the repo (README, package.json, routes, deploy
 config):
@@ -80,8 +98,9 @@ config):
    screen recordings (`import`).
 4. **Which devices?** The kind's default (Recommended) · Desktop only · Mobile only.
 
-**Round 2: the story.** Ask this after you have read the real pages, screens or workflow (and after a
-first capture if that helps):
+**Round 2: the story.** Ask this after inspecting the real pages, screens or workflow. In voice-over
+mode, a first capture can help. In presenter mode, move this round before capture and skip question 3
+because the recording supplies the voice.
 
 1. **What should the video highlight?** (multiSelect) Up to 4 real features, pages or steps you
    found, named the way the product names them.
@@ -125,7 +144,8 @@ Follow [WORKFLOW.md](WORKFLOW.md). In short:
 5. **Capture:** `SC capture <slug>`. Read `capture/report.md` and a few `steps/*/after.jpg`. Hide
    banners and overlays (`capture.hide`) and blur anything personal (`capture.blur`).
 6. **Interview, round 2.** Then write 7–8 short lines tied to their steps and run `SC narrate <slug>`.
-   Aim for about 25 s.
+   In voice-over mode, aim for about 25 s. In presenter mode, use the script and source takes reviewed
+   before capture, and follow the timing of the recording.
 7. **Review:** `SC still <slug>`, `SC cover <slug>` and `SC grid <slug>`. Then **interview round 3**.
 8. **Render:**
    - `SC render <slug>` writes the MP4, `instagram-cover.png`, the grid-crop preview and the QA
@@ -138,8 +158,8 @@ Follow [WORKFLOW.md](WORKFLOW.md). In short:
 
 ## The profile stays one portfolio
 
-- Same structure, identity, cover layout, voice, music and outro on every post. Only the work
-  changes.
+- Keep the studio's structure, identity, cover layout, music and outro consistent. Use the selected
+  narration source for each Reel.
 - Eyebrow taxonomy on the cover: `<Kind> · <Category>` (`Website · Restaurant`,
   `Automation · Lead follow-up`, `Branding · Coffee roaster`).
 - Before rendering, run `SC grid <slug>`. It previews the profile with this post first and warns about:
@@ -158,9 +178,8 @@ Follow [WORKFLOW.md](WORKFLOW.md). In short:
 - Describe only what is on screen, in the part where it appears. No invented features, claims,
   prices, numbers, awards or reviews.
 - For automations, say what triggers it, what it does and what the result is, in plain words.
-- Never speed the voice up to fit: shorten the lines instead. Never claim narration exists if it was
-  not generated. If a requested voice provider is missing its key, say which environment variable is
-  needed.
+- Preserve the delivery pace. Shorten scripted lines before recording or adjust the edit to fit
+  an existing take. For a generated voice provider that needs a key, name the environment variable.
 
 ## Rules
 
@@ -170,7 +189,8 @@ Follow [WORKFLOW.md](WORKFLOW.md). In short:
   keys, admin panels, staging banners or dev overlays. Blur or hide what cannot be avoided.
 - **Never handle passwords.** The user signs in themselves (`SC login`). Never write keys into files.
 - **Keep the identity.** No zooms, camera rotations, flashy transitions, sped-up scrolling or site
-  animations, long static screenshots or AI-generated imagery.
+  animations, long static screenshots or generated walkthrough footage. Presenter mode may use
+  the avatar clip supplied by the user.
 - **Never edit the template for a project.** Don't change the engine's `src/` or a published
   template's numbers. Everything project-specific goes in the project config.
 - **Music:** the engine's own bed, or a track the user supplies with its licence recorded. Never
@@ -197,6 +217,7 @@ Leave the files in `<engine>/projects/<slug>/out/` unless asked otherwise.
 ## Supporting files
 
 - [WORKFLOW.md](WORKFLOW.md): the full process per kind, with checks.
+- [PRESENTER.md](PRESENTER.md): recording prompt, footage review and presenter configuration.
 - [STYLE-GUIDE.md](STYLE-GUIDE.md): the visual, pacing, narration, audio, cover and profile rules.
 - [CONFIG-EXAMPLE.md](CONFIG-EXAMPLE.md),
   [showcase.config.example.json](showcase.config.example.json) and

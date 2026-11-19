@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { presenterInsetSchema, SEGMENTS } from '../../src/schema';
 import { DEFAULT_TEMPLATE, TEMPLATE_IDS } from '../../src/templates';
 import { KIND_IDS } from './kinds';
 
@@ -254,6 +255,19 @@ export const projectSchema = z.object({
 		})
 		.prefault({}),
 	agency: agencyOverrideSchema.default({}).describe('Per-video overrides of agency.config.json (only the keys you set)'),
+	presenter: z
+		.object({
+			video: z.string().min(1).describe('Local MP4 recording with the original narration, relative to the project config or absolute'),
+			minPause: z.number().positive().default(0.85).describe('Minimum pause in seconds between lines when detecting takes'),
+			takes: z
+				.array(z.tuple([z.number().min(0), z.number().positive()]))
+				.min(1)
+				.optional()
+				.describe('Optional [startSeconds, endSeconds] per narration line. Use to select takes manually.'),
+			inset: presenterInsetSchema.prefault({}).describe('Fractions of the source picture to crop at each edge for the presenter cards'),
+		})
+		.nullable()
+		.default(null),
 	brief: z
 		.object({
 			goal: z.string().optional(),
@@ -265,6 +279,20 @@ export const projectSchema = z.object({
 		.passthrough()
 		.default({})
 		.describe('Answers from the /showcase interview, kept so the video can be remade the same way'),
+}).superRefine((config, ctx) => {
+	if (!config.presenter) return;
+	const { enabled, lines } = config.narration;
+	if (!enabled || lines === 'auto') {
+		ctx.addIssue({ code: 'custom', path: ['narration'], message: 'Presenter mode requires enabled narration and an explicit script in narration.lines.' });
+		return;
+	}
+	const segments = lines.map((line) => line.segment);
+	if (!segments.includes('intro') || !segments.includes('outro') || !segments.some((seg) => seg === 'desktop' || seg === 'mobile')) {
+		ctx.addIssue({ code: 'custom', path: ['narration', 'lines'], message: 'Provide an intro, walkthrough and outro for the presenter recording.' });
+	}
+	if (segments.some((seg, i) => i > 0 && SEGMENTS.indexOf(seg) < SEGMENTS.indexOf(segments[i - 1]))) {
+		ctx.addIssue({ code: 'custom', path: ['narration', 'lines'], message: 'List presenter lines in playback order: intro, desktop, mobile, outro.' });
+	}
 });
 
 export type ProjectConfig = z.infer<typeof projectSchema>;

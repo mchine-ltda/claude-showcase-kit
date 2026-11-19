@@ -15,13 +15,13 @@ import type { SceneProps } from './scene-props';
  * typography (bookend), a hairline draws, the signature resolves and holds,
  * then everything dims to black so the Reel loops cleanly into the hook.
  */
-export const OutroScene: React.FC<SceneProps & { cta: TextLines }> = ({ props, plan, cta }) => {
+export const OutroScene: React.FC<SceneProps & { cta: TextLines; signatureDelay?: number }> = ({ props, plan, cta, signatureDelay = 0 }) => {
 	const frame = useCurrentFrame();
 	const { width, height } = useVideoConfig();
 	const u = Math.min(width, height) / 1080;
 	const o = templateOf(props).outro;
 	const t = useType();
-	const b = outroBeats(plan.duration, plan.enter, templateOf(props));
+	const b = outroBeats(plan.duration, plan.enter, templateOf(props), signatureDelay);
 	const rule = progress(frame, b.ruleIn, b.ruleIn + o.ruleFrames, EASE.glide);
 	const sub = progress(frame, b.subtitleIn, b.subtitleIn + o.textFrames, EASE.glide);
 	const contact = progress(frame, b.contactIn, b.contactIn + o.textFrames, EASE.glide);

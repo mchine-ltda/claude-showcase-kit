@@ -18,15 +18,17 @@
 
 Open Claude Code in the repository of something you built and type `/showcase`. Claude:
 
-1. **Interviews you** in three short rounds of multiple-choice questions: what it is, what the post
-   is for, what to highlight, the tone, and finally the storyboard and cover before anything renders.
+1. **Asks how you want to present the Reel** and helps plan what to show. Choose voice-over or a
+   presenter on camera. For a presenter, Claude writes a talking-head prompt for you to record or
+   generate, then waits for the footage.
 2. **Records the real thing** with Playwright. Real scrolling, menus, clicks, typing and page changes
    on desktop and mobile. For automations, the trigger, the run and the result in every app it
    touches, joined by cuts.
-3. **Writes and voices the narration** with a natural British English voice that runs locally (no API
-   key), each line timed to the action it describes.
-4. **Renders the Reel** (1080×1920, ~25 s, H.264) with Remotion: a cover lockup, the walkthrough and
-   your studio's outro, with subtitles, a ducked music bed and subtle sound design.
+3. **Syncs the narration** to the actions it describes. Voice-over mode uses a local British English
+   voice. Presenter mode uses the voice from your take throughout, with presenter cards at the
+   beginning and end.
+4. **Renders the Reel** (1080×1920, H.264) with Remotion. The cover lockup, walkthrough and studio
+   outro share the same style. The edit includes subtitles, a ducked music bed and subtle sound design.
 5. **Exports the Instagram cover** (`instagram-cover.png`), the exact opening frame of the video,
    with a preview of how it crops in the profile grid.
 6. **Checks your profile**: it previews the grid with the new post first and warns if it breaks the
@@ -34,8 +36,8 @@ Open Claude Code in the repository of something you built and type `/showcase`. 
 7. **Runs QA** on the result: format, frames, freezes, narration timing, voice above music on rendered
    stems, loudness, and the cover matching the video.
 
-**Nothing is invented.** Every page, screen and interaction in the video is real. Steps that change
-nothing are dropped. Your repository is only read, never changed.
+The walkthrough uses real pages, screens and interactions from your project. The engine reads your
+repository and keeps its outputs in the showcase project folder.
 
 ## One idea for every kind of work
 
@@ -121,6 +123,7 @@ a demo account yourself, and the session is reused for the recording.
 |---|---|
 | [SKILL.md](skills/showcase/SKILL.md) | What Claude does when you type `/showcase`, including the interview |
 | [WORKFLOW.md](skills/showcase/WORKFLOW.md) | The full process per kind of work |
+| [PRESENTER.md](skills/showcase/PRESENTER.md) | Recording prompt, footage review and presenter setup |
 | [STYLE-GUIDE.md](skills/showcase/STYLE-GUIDE.md) | The visual, pacing, narration, audio, cover and profile rules |
 | [CONFIG-EXAMPLE.md](skills/showcase/CONFIG-EXAMPLE.md) | Annotated website and automation configs |
 | [FRAMEWORK.md](skills/showcase/FRAMEWORK.md) | Architecture and render pipeline |

@@ -38,6 +38,7 @@ export const RemotionRoot: React.FC = () => {
 					subtitles: { enabled: true },
 					cover: { enabled: false, frame: null, showAgency: true },
 					identity: null,
+					presenter: null,
 					audio: {
 						music: null,
 						sfx: { enabled: true, volume: 0.7 },

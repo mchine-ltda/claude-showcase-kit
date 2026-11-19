@@ -9,6 +9,14 @@ import type { CaptureManifest, NarrationLine } from './types';
 
 const fontFace = z.object({ family: z.string(), files: z.array(z.object({ src: z.string(), weight: z.number() })) });
 
+const insetFraction = z.number().min(0).max(0.45).default(0);
+export const presenterInsetSchema = z.object({
+	top: insetFraction,
+	right: insetFraction,
+	bottom: insetFraction,
+	left: insetFraction,
+});
+
 const narrationLineSchema = z.object({
 	id: z.string(),
 	segment: z.enum(['intro', 'desktop', 'mobile', 'outro']),
@@ -16,6 +24,7 @@ const narrationLineSchema = z.object({
 	step: z.string().nullable(),
 	src: z.string(),
 	seconds: z.number(),
+	sourceStart: z.number().min(0).optional(),
 });
 
 export const showcaseSchema = z.object({
@@ -53,6 +62,15 @@ export const showcaseSchema = z.object({
 		volume: z.number().min(0).max(2),
 	}),
 	subtitles: z.object({ enabled: z.boolean() }),
+	presenter: z
+		.object({
+			src: z.string(),
+			width: z.number().positive(),
+			height: z.number().positive(),
+			inset: presenterInsetSchema,
+		})
+		.nullable()
+		.default(null),
 	identity: z
 		.object({
 			display: fontFace,

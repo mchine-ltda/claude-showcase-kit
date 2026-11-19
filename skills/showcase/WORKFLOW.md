@@ -4,6 +4,10 @@
 `node "$HOME/.claude/skills/showcase/scripts/showcase.mjs"`). Run it from the work's repository;
 everything it writes goes to the engine's `projects/<slug>/`. The repository is read, never written.
 
+Start with the presenter-format question in [SKILL.md](SKILL.md). For on-camera presenter mode,
+follow [PRESENTER.md](PRESENTER.md) for the prompt and wait for usable footage before project setup,
+capture and previews. The remaining steps apply once the recording is ready.
+
 ## 0. Check the engine
 
 ```bash
@@ -144,6 +148,9 @@ Warnings with the reason. Open a few `capture/*/steps/*/after.jpg` and check:
 Ask what to highlight (real features you found, as options), the tone, the voice and the closing
 line. Then write `narration.lines`: 7–8 short lines, about 20 s of speech.
 
+For presenter mode the story questions were answered before capture. Use the verified recorded script
+and local `presenter.video`, and skip generated-voice selection.
+
 | Part | Example |
 |---|---|
 | intro | "Meet <Client>." |
@@ -154,8 +161,9 @@ line. Then write `narration.lines`: 7–8 short lines, about 20 s of speech.
 SC narrate <slug>
 ```
 
-This voices each line (cached) and prints the timings. Target 25–28 s (the outro is 3.6 s); desktop
-and mobile get equal time. A long part means shorter lines, never a faster voice.
+This prints timings for the generated or recorded narration. For the standard voice-over, target
+25–28 s with equal time on desktop and mobile. For the presenter, budget around the actual speech
+and distribute walkthrough time by the lines and actions on each device.
 
 ## 8. Review, interview round 3
 
