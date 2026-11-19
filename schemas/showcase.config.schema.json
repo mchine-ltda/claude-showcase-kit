@@ -1392,6 +1392,85 @@
         }
       }
     },
+    "presenter": {
+      "default": null,
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "video": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Local MP4 recording with the original narration, relative to the project config or absolute"
+            },
+            "minPause": {
+              "default": 0.85,
+              "description": "Minimum pause in seconds between lines when detecting takes",
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "takes": {
+              "description": "Optional [startSeconds, endSeconds] per narration line. Use to select takes manually.",
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "inset": {
+              "description": "Fractions of the source picture to crop at each edge for the presenter cards",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "top": {
+                  "default": 0,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.45
+                },
+                "right": {
+                  "default": 0,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.45
+                },
+                "bottom": {
+                  "default": 0,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.45
+                },
+                "left": {
+                  "default": 0,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.45
+                }
+              }
+            }
+          },
+          "required": [
+            "video"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "brief": {
       "default": {},
       "description": "Answers from the /showcase interview, kept so the video can be remade the same way",

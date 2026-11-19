@@ -56,7 +56,7 @@ export const buildNarration = async (opts: { dir: string; voice: VoiceConfig; li
 };
 
 /** Trim silence, level speech to about -18 dBFS RMS, soft-limit peaks under -3 dBFS (headroom for music + AAC), add tiny fades. */
-export const master = (pcm: Pcm): Pcm => {
+export const master = (pcm: Pcm, { trim = true } = {}): Pcm => {
 	const sr = pcm.sampleRate;
 	const x = pcm.channels[0];
 	const win = Math.round(sr * 0.01);
@@ -71,8 +71,8 @@ export const master = (pcm: Pcm): Pcm => {
 	while (first < x.length && rmsAt(first) < gate) first += win;
 	let last = x.length - win;
 	while (last > first && rmsAt(last) < gate) last -= win;
-	const start = Math.max(0, first - Math.round(sr * 0.03));
-	const end = Math.min(x.length, last + win + Math.round(sr * 0.14));
+	const start = trim ? Math.max(0, first - Math.round(sr * 0.03)) : 0;
+	const end = trim ? Math.min(x.length, last + win + Math.round(sr * 0.14)) : x.length;
 	const y = x.slice(start, end);
 
 	// Loudness from active speech only.

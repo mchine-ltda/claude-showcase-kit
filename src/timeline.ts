@@ -38,9 +38,21 @@ export type Timeline = {
 	spec: TemplateSpec;
 };
 
-type TimingProps = Pick<ShowcaseProps, 'timing' | 'narration' | 'balance' | 'audio' | 'capture'> & { template?: string | null };
+type TimingProps = Pick<ShowcaseProps, 'timing' | 'narration' | 'balance' | 'audio' | 'capture'> &
+	Partial<Pick<ShowcaseProps, 'presenter' | 'cover'>> & { template?: string | null };
 
 const linesOf = (props: Pick<ShowcaseProps, 'narration'>, seg: SegmentKey) => props.narration.lines.filter((l) => l.segment === seg);
+
+const pacingOf = (props: TimingProps, spec: TemplateSpec): TemplateSpec['pacing'] => {
+	const pacing = spec.pacing;
+	if (!props.presenter) return pacing;
+	return {
+		...pacing,
+		lead: { ...pacing.lead, intro: props.cover?.enabled ? 1.2 : 0.3, outro: 0.28 },
+		tail: { ...pacing.tail, intro: 0.32, outro: 1.95 },
+		overhang: { ...pacing.overhang, intro: 0, outro: 0 },
+	};
+};
 
 /** The music's beat grid in video time, or null without a beat-synced track. */
 const beatGrid = (props: TimingProps, spec: TemplateSpec) => {
@@ -65,7 +77,7 @@ export const segmentSeconds = (props: TimingProps) => {
 
 /** V2: each segment is budgeted on its own (lead + speech + tail), then balanced and beat-snapped. */
 const independentSegmentSeconds = (props: TimingProps, spec: TemplateSpec) => {
-	const { lead, tail } = spec.pacing;
+	const { lead, tail } = pacingOf(props, spec);
 	const out = {} as Record<SegmentKey, number>;
 	for (const seg of SEGMENTS) {
 		const ls = linesOf(props, seg);
@@ -93,7 +105,7 @@ const independentSegmentSeconds = (props: TimingProps, spec: TemplateSpec) => {
  * part is stretched just to hold a sentence.
  */
 const chainedSegmentSeconds = (props: TimingProps, spec: TemplateSpec) => {
-	const { lead, tail, overhang } = spec.pacing;
+	const { lead, tail, overhang } = pacingOf(props, spec);
 	const gap = props.narration.gapSeconds;
 	const grid = beatGrid(props, spec);
 	const ceil = (s: number) => (grid ? grid.ceilBeats(s) : s);
@@ -158,9 +170,10 @@ export const buildTimeline = (props: ShowcaseProps, fps: number): Timeline => {
 	// Narration first: sequential within each segment, never overlapping.
 	const lines: LinePlan[] = [];
 	const gap = Math.round(props.narration.gapSeconds * fps);
+	const { lead } = pacingOf(props, spec);
 	let prevEnd = 0;
 	for (const s of scenes) {
-		let cursor = Math.max(s.slotFrom + Math.round(spec.pacing.lead[s.key] * fps), prevEnd + (prevEnd ? gap : 0));
+		let cursor = Math.max(s.slotFrom + Math.round(lead[s.key] * fps), prevEnd + (prevEnd ? gap : 0));
 		for (const line of linesOf(props, s.key)) {
 			const duration = Math.ceil(line.seconds * fps);
 			lines.push({ line, from: cursor, duration });
@@ -434,9 +447,30 @@ export const introBeats = (spec: TemplateSpec) => ({
 	lineStagger: spec.intro.lineStagger,
 });
 
-export const outroBeats = (d: number, enter: number, spec: TemplateSpec) => {
+export const PRESENTER_FADE = 8;
+
+export const presenterWindow = (tl: Timeline, segment: 'intro' | 'outro') => {
+	const scene = tl.scenes.find((s) => s.key === segment);
+	const lines = tl.lines.filter(({ line }) => line.segment === segment && line.sourceStart !== undefined);
+	if (!scene || !lines.length) return null;
+	const first = lines[0];
+	const last = lines[lines.length - 1];
+	const preRoll = Math.min(PRESENTER_FADE, Math.floor((first.line.sourceStart ?? 0) * tl.fps));
+	const from = Math.max(0, first.from - preRoll);
+	const speechEnd = last.from + last.duration;
+	const fadeEnd = speechEnd + PRESENTER_FADE;
+	const to = Math.min(tl.total, segment === 'intro' ? Math.max(scene.from + scene.duration, fadeEnd) : fadeEnd);
+	return { from, to, lines };
+};
+
+export const outroSignatureDelay = (tl: Timeline, scene: ScenePlan) => {
+	const window = presenterWindow(tl, 'outro');
+	return window ? Math.max(0, window.to - scene.slotFrom - 3) : 0;
+};
+
+export const outroBeats = (d: number, enter: number, spec: TemplateSpec, delay = 0) => {
 	const o = spec.outro;
-	const ctaStart = Math.round(enter / 2);
+	const ctaStart = Math.round(enter / 2) + delay;
 	const markIn = ctaStart + o.markDelay;
 	return { ctaStart, ruleIn: markIn - o.ruleLead, markIn, subtitleIn: markIn + o.subtitleDelay, contactIn: markIn + o.contactDelay, fadeOutStart: d - o.fadeOutFrames };
 };
@@ -494,7 +528,7 @@ export const buildSfxCues = (props: ShowcaseProps, tl: Timeline): SfxCue[] => {
 			});
 		}
 		if (s.key === 'outro') {
-			const b = outroBeats(s.duration, s.enter, spec);
+			const b = outroBeats(s.duration, s.enter, spec, props.presenter ? outroSignatureDelay(tl, s) : 0);
 			at('chime', s.from + b.markIn + 2, 0.24, 'signature resolves');
 			at('impact-soft', s.from + b.markIn + 2, 0.16, 'signature weight');
 		}

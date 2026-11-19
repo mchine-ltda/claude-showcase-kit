@@ -64,6 +64,9 @@ The stage glow hands over from the project's accent to the agency's accent as th
 
 ## Edit and pacing (template `v3-dynamic`)
 
+These timings are for the standard voice-over. In presenter mode the opening and closing cards
+follow the recorded speech while the cover and device walkthrough keep the studio layout.
+
 | Part | Website, web app | App | Automation, branding |
 |---|---|---|---|
 | Cover lockup | ~1.2 s | ~1.2 s | ~1.2 s |
@@ -87,11 +90,11 @@ The stage glow hands over from the project's accent to the agency's accent as th
 - motion blur on content;
 - sped-up scrolling or animations;
 - long static screenshots;
-- AI-generated or stock imagery.
+- generated walkthrough footage or stock inserts in the device walkthrough.
 
 ## Narration
 
-- **Voice:** Kokoro `bf_emma` at speed 1.0, warm and neutral British English that suits an Irish
+- **Voice-over only:** Kokoro `bf_emma` at speed 1.0, warm and neutral British English that suits an Irish
   audience. Cloud voices (ElevenLabs, Azure `en-IE-*`, OpenAI) are optional, with their own key.
 - **Script:** 7–8 short lines, about 20 s of speech, 0.25 s apart. Confident and conversational,
   never salesy.
@@ -104,6 +107,10 @@ The stage glow hands over from the project's accent to the agency's accent as th
   - a short closer;
   - "Want a <website|web app|app|automation|brand> like this for your business? Send us a message."
     It starts as the device leaves; the outro holds the CTA and signature for about a second after it.
+
+With a presenter, use the recording for all narration. Show the presenter in rounded cards after
+the cover and before the studio signature. Select the crop and background treatment using
+[PRESENTER.md](PRESENTER.md).
 
 ## Audio mix
 

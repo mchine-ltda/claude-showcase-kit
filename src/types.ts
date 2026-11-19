@@ -115,6 +115,8 @@ export type NarrationLine = {
 	/** staticFile path of the voiced take. */
 	src: string;
 	seconds: number;
+	/** Start in seconds of the matching take in the presenter recording. */
+	sourceStart?: number;
 };
 
 export type CaptureManifest = {
