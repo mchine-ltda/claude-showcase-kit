@@ -1,0 +1,22 @@
+node_modules
+dist
+.DS_Store
+.env
+.env.*
+
+# Engine working dirs and caches
+.stage/
+out/
+.cache/
+
+# Your work stays private: projects (captures of client sites, narration takes, renders,
+# saved demo-account logins) and your agency kit (logo, licensed fonts). Only the demo's
+# config is public.
+projects/*
+!projects/demo-saltmarsh/
+projects/demo-saltmarsh/*
+!projects/demo-saltmarsh/showcase.config.json
+agency.config.json
+agency/
+releases/
+comparisons/

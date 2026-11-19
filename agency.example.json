@@ -1,0 +1,17 @@
+{
+  "$comment": "Copy to agency.config.json (kept out of git) and fill in your studio. Paths are relative to this file.",
+  "name": "Your Studio",
+  "logo": null,
+  "logoHeight": 84,
+  "subtitle": "Web design and development",
+  "cta": "Let's build *yours.*",
+  "contact": "",
+  "accent": "#c8ff32",
+  "identity": {
+    "display": { "family": "Geist", "files": [] },
+    "body": { "family": "Geist", "files": [] },
+    "mono": { "family": "Geist Mono", "files": [] },
+    "eyebrow": "mono",
+    "tracking": "-0.04em"
+  }
+}

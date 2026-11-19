@@ -1,0 +1,1428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "template": {
+      "default": "v3-dynamic",
+      "description": "\"v3-dynamic\" = Cinematic Premium V3, the approved production standard (default) · \"v2-stable\" = Cinematic Premium V2, the earlier, slower edit",
+      "type": "string",
+      "enum": [
+        "v2-stable",
+        "v3-dynamic"
+      ]
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "default": "",
+          "description": "Public or local URL to capture",
+          "type": "string"
+        },
+        "displayUrl": {
+          "default": null,
+          "description": "What the browser address bar shows. Default: hostname of a public URL",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "category": {
+          "default": "Web design",
+          "type": "string"
+        },
+        "accent": {
+          "default": "auto",
+          "description": "\"auto\" = detected from the site",
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^#([0-9a-fA-F]{6})$"
+            },
+            {
+              "type": "string",
+              "const": "auto"
+            }
+          ]
+        },
+        "demo": {
+          "default": false,
+          "type": "boolean"
+        },
+        "kind": {
+          "default": "website",
+          "description": "What is shown: website, web-app, app (phone only), automation or branding (desktop only by default)",
+          "type": "string",
+          "enum": [
+            "website",
+            "web-app",
+            "app",
+            "automation",
+            "branding"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "source": {
+      "default": {
+        "serve": null,
+        "start": null
+      },
+      "type": "object",
+      "properties": {
+        "serve": {
+          "default": null,
+          "description": "Static folder to serve locally for capture (e.g. a built dist/)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start": {
+          "default": null,
+          "description": "Command that starts the site locally, run only for the capture",
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "command": {
+                  "type": "string"
+                },
+                "cwd": {
+                  "default": ".",
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "timeoutSeconds": {
+                  "default": 120,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "command",
+                "url"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "capture": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "desktop": {
+          "default": {
+            "width": 1280,
+            "height": 1320,
+            "deviceScaleFactor": 2
+          },
+          "description": "Desktop browser size. The tall default fills a vertical Reel without zooming",
+          "type": "object",
+          "properties": {
+            "width": {
+              "default": 1280,
+              "type": "number"
+            },
+            "height": {
+              "default": 1320,
+              "type": "number"
+            },
+            "deviceScaleFactor": {
+              "default": 2,
+              "type": "number"
+            }
+          }
+        },
+        "mobile": {
+          "default": {
+            "width": 390,
+            "height": 844,
+            "deviceScaleFactor": 3
+          },
+          "type": "object",
+          "properties": {
+            "width": {
+              "default": 390,
+              "type": "number"
+            },
+            "height": {
+              "default": 844,
+              "type": "number"
+            },
+            "deviceScaleFactor": {
+              "default": 3,
+              "type": "number"
+            }
+          }
+        },
+        "maxPageHeight": {
+          "default": 14000,
+          "type": "number"
+        },
+        "waitForSelector": {
+          "default": null,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extraWaitMs": {
+          "default": 600,
+          "type": "number"
+        },
+        "hide": {
+          "default": [],
+          "description": "Extra selectors to hide (banners, chat widgets, staging badges)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blur": {
+          "default": [],
+          "description": "Selectors to blur for privacy (emails, phone numbers, client data)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reducedMotion": {
+          "default": false,
+          "type": "boolean"
+        },
+        "sections": {
+          "default": [],
+          "description": "Manual sections; empty = automatic detection",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector of the section element"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "hero",
+                  "products",
+                  "features",
+                  "gallery",
+                  "testimonial",
+                  "process",
+                  "cta",
+                  "contact",
+                  "content",
+                  "footer"
+                ]
+              },
+              "label": {
+                "type": "string"
+              },
+              "focus": {
+                "description": "Selector of the block to frame inside the section (e.g. the cards grid)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "selector"
+            ]
+          }
+        },
+        "startPath": {
+          "default": "",
+          "description": "Path to start the walkthrough from, e.g. \"/en\" for an English version",
+          "type": "string"
+        },
+        "devices": {
+          "description": "Devices to record and show; default from project.kind (website/web-app: both, app: mobile, automation/branding: desktop)",
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "desktop",
+              "mobile"
+            ]
+          }
+        },
+        "auth": {
+          "default": null,
+          "description": "Saved demo-account session (from `showcase login`), relative to this config. Never commit it",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hostLabels": {
+          "default": {},
+          "description": "Address-bar text for other sites in an automation, e.g. { \"app.n8n.cloud\": \"n8n\" }",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "journeys": {
+          "default": "auto",
+          "description": "Browsing sessions to record. \"auto\" = scroll, click real nav links, open the mobile menu, reach the contact page",
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "auto"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "desktop": {
+                  "default": "auto",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "auto"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "scroll"
+                              },
+                              "to": {
+                                "description": "\"best\" (strongest section ahead), \"far\" (strongest section further down), \"heading:<text>\", \"section:<kind|id>\", a section selector, \"bottom\", \"60%\", \"+800\" (px), 0.5 (fraction) or 2400 (px)",
+                                "type": [
+                                  "string",
+                                  "number"
+                                ]
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "to"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "cut"
+                              },
+                              "to": {
+                                "default": "far",
+                                "description": "\"best\" (strongest section ahead), \"far\" (strongest section further down), \"heading:<text>\", \"section:<kind|id>\", a section selector, \"bottom\", \"60%\", \"+800\" (px), 0.5 (fraction) or 2400 (px)",
+                                "type": [
+                                  "string",
+                                  "number"
+                                ]
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do"
+                            ],
+                            "description": "Edit cut to another part of the current page (no scrolling shown)"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "link"
+                              },
+                              "text": {
+                                "description": "Visible link text (or path) to click/tap",
+                                "type": "string"
+                              },
+                              "prefer": {
+                                "description": "Pick the best matching link automatically",
+                                "type": "string",
+                                "enum": [
+                                  "services",
+                                  "projects",
+                                  "about",
+                                  "contact"
+                                ]
+                              },
+                              "depth": {
+                                "default": "overview",
+                                "description": "With prefer: the overview page (/services) or a specific page under it (/services/welders)",
+                                "type": "string",
+                                "enum": [
+                                  "overview",
+                                  "detail"
+                                ]
+                              },
+                              "via": {
+                                "description": "Open this header dropdown first (its visible label, e.g. \"Services\")",
+                                "type": "string"
+                              },
+                              "scope": {
+                                "default": "header",
+                                "type": "string",
+                                "enum": [
+                                  "header",
+                                  "menu",
+                                  "page"
+                                ]
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "menu"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do"
+                            ],
+                            "description": "Mobile: open the menu (toggle found automatically)"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "click"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "tap"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "hover"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "goto"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "path"
+                            ],
+                            "description": "Cut to another page, or another site with a full URL (automations), without showing navigation"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "type"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector",
+                              "text"
+                            ],
+                            "description": "Type into a real field (recorded keystroke by keystroke). Use demo data only"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "wait"
+                              },
+                              "ms": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "ms"
+                            ],
+                            "description": "Capture only: wait, e.g. for an automation run to finish (nothing is shown)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "mobile": {
+                  "default": "auto",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "auto"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "scroll"
+                              },
+                              "to": {
+                                "description": "\"best\" (strongest section ahead), \"far\" (strongest section further down), \"heading:<text>\", \"section:<kind|id>\", a section selector, \"bottom\", \"60%\", \"+800\" (px), 0.5 (fraction) or 2400 (px)",
+                                "type": [
+                                  "string",
+                                  "number"
+                                ]
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "to"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "cut"
+                              },
+                              "to": {
+                                "default": "far",
+                                "description": "\"best\" (strongest section ahead), \"far\" (strongest section further down), \"heading:<text>\", \"section:<kind|id>\", a section selector, \"bottom\", \"60%\", \"+800\" (px), 0.5 (fraction) or 2400 (px)",
+                                "type": [
+                                  "string",
+                                  "number"
+                                ]
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do"
+                            ],
+                            "description": "Edit cut to another part of the current page (no scrolling shown)"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "link"
+                              },
+                              "text": {
+                                "description": "Visible link text (or path) to click/tap",
+                                "type": "string"
+                              },
+                              "prefer": {
+                                "description": "Pick the best matching link automatically",
+                                "type": "string",
+                                "enum": [
+                                  "services",
+                                  "projects",
+                                  "about",
+                                  "contact"
+                                ]
+                              },
+                              "depth": {
+                                "default": "overview",
+                                "description": "With prefer: the overview page (/services) or a specific page under it (/services/welders)",
+                                "type": "string",
+                                "enum": [
+                                  "overview",
+                                  "detail"
+                                ]
+                              },
+                              "via": {
+                                "description": "Open this header dropdown first (its visible label, e.g. \"Services\")",
+                                "type": "string"
+                              },
+                              "scope": {
+                                "default": "header",
+                                "type": "string",
+                                "enum": [
+                                  "header",
+                                  "menu",
+                                  "page"
+                                ]
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "menu"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do"
+                            ],
+                            "description": "Mobile: open the menu (toggle found automatically)"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "click"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "tap"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "hover"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "goto"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "path"
+                            ],
+                            "description": "Cut to another page, or another site with a full URL (automations), without showing navigation"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "type"
+                              },
+                              "selector": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              },
+                              "waitMs": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "selector",
+                              "text"
+                            ],
+                            "description": "Type into a real field (recorded keystroke by keystroke). Use demo data only"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "do": {
+                                "type": "string",
+                                "const": "wait"
+                              },
+                              "ms": {
+                                "type": "number"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "do",
+                              "ms"
+                            ],
+                            "description": "Capture only: wait, e.g. for an automation run to finish (nothing is shown)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "video": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "format": {
+          "default": "reel",
+          "type": "string",
+          "enum": [
+            "reel",
+            "portrait",
+            "square",
+            "landscape"
+          ]
+        },
+        "eyebrow": {
+          "default": "auto",
+          "description": "\"auto\" = \"Website · <category>\"",
+          "type": "string"
+        },
+        "title": {
+          "default": null,
+          "description": "Intro title; default: project name",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cta": {
+          "default": null,
+          "description": "Override the agency CTA for this video",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "timing": {
+          "description": "Minimum seconds per part; narration can lengthen them. Unset parts use the template's defaults",
+          "default": {},
+          "type": "object",
+          "properties": {
+            "intro": {
+              "type": "number",
+              "minimum": 0.8
+            },
+            "desktop": {
+              "type": "number",
+              "minimum": 4
+            },
+            "mobile": {
+              "type": "number",
+              "minimum": 4
+            },
+            "outro": {
+              "type": "number",
+              "minimum": 1
+            }
+          }
+        },
+        "balance": {
+          "default": true,
+          "description": "Give desktop and mobile the same length",
+          "type": "boolean"
+        },
+        "cover": {
+          "description": "Instagram cover: a designed opening frame of the video, exported as PNG",
+          "default": {},
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Open on the cover lockup and export out/instagram-cover.png (init turns this on for new projects)",
+              "type": "boolean"
+            },
+            "frame": {
+              "default": null,
+              "description": "Exact video frame to use as the cover; null = the lockup's settled frame",
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "time": {
+              "default": null,
+              "description": "Cover time in seconds (used when frame is null)",
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "showAgency": {
+              "default": true,
+              "description": "Small agency signature under the devices",
+              "type": "boolean"
+            }
+          }
+        },
+        "subtitles": {
+          "default": true,
+          "type": "boolean"
+        },
+        "output": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "narration": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "type": "boolean"
+        },
+        "voice": {
+          "default": {},
+          "type": "object",
+          "properties": {
+            "provider": {
+              "default": "kokoro",
+              "type": "string",
+              "enum": [
+                "kokoro",
+                "elevenlabs",
+                "openai",
+                "azure"
+              ]
+            },
+            "voice": {
+              "default": "",
+              "description": "kokoro: bf_emma, bm_george, bm_fable, bf_isabella… · elevenlabs: voice id · openai: sage, ballad… · azure: en-IE-EmilyNeural, en-IE-ConnorNeural, en-GB-…",
+              "type": "string"
+            },
+            "speed": {
+              "default": 1,
+              "type": "number",
+              "minimum": 0.7,
+              "maximum": 1.3
+            },
+            "model": {
+              "type": "string"
+            },
+            "instructions": {
+              "description": "OpenAI only: delivery/accent guidance",
+              "type": "string"
+            }
+          }
+        },
+        "lines": {
+          "default": "auto",
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "auto"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "segment": {
+                    "type": "string",
+                    "enum": [
+                      "intro",
+                      "desktop",
+                      "mobile",
+                      "outro"
+                    ]
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "step": {
+                    "description": "Journey step id this line should start with",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "segment",
+                  "text"
+                ]
+              }
+            }
+          ]
+        },
+        "gapSeconds": {
+          "description": "Pause between narration lines; default from the template (V2 0.35, V3 0.25)",
+          "type": "number"
+        },
+        "volume": {
+          "default": 1,
+          "type": "number"
+        }
+      }
+    },
+    "audio": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "music": {
+          "default": null,
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "description": "Path to a licensed track (relative to this config)"
+                },
+                "volume": {
+                  "default": 0.8,
+                  "type": "number"
+                },
+                "startAt": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "bpm": {
+                  "default": "auto",
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "string",
+                          "const": "auto"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "offset": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "beatSync": {
+                  "default": true,
+                  "type": "boolean"
+                },
+                "licence": {
+                  "default": {},
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "artist": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "source": {
+                      "default": "",
+                      "description": "Where it was obtained (store/library URL)",
+                      "type": "string"
+                    },
+                    "licence": {
+                      "default": "",
+                      "description": "Licence name, e.g. \"Artlist Pro\", \"Epidemic Sound Commercial\", \"CC0\"",
+                      "type": "string"
+                    },
+                    "licenceUrl": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "proof": {
+                      "default": "",
+                      "description": "Path or URL of the licence certificate / receipt",
+                      "type": "string"
+                    },
+                    "clearedForAds": {
+                      "default": false,
+                      "description": "True only if the licence explicitly allows paid advertising use",
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "file"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "builtinMusic": {
+          "default": true,
+          "description": "Use the engine's own synthesised music bed when no licensed track is set",
+          "type": "boolean"
+        },
+        "musicVolume": {
+          "default": 0.32,
+          "description": "Music level between narration lines",
+          "type": "number"
+        },
+        "duckTo": {
+          "default": 0.12,
+          "description": "Music level while the narrator speaks",
+          "type": "number"
+        },
+        "sfx": {
+          "default": true,
+          "type": "boolean"
+        },
+        "sfxVolume": {
+          "default": 0.7,
+          "type": "number"
+        },
+        "ambientBed": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "agency": {
+      "default": {},
+      "description": "Per-video overrides of agency.config.json (only the keys you set)",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "logo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "logoHeight": {
+          "type": "number"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "cta": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        },
+        "accent": {
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{6})$"
+        },
+        "identity": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "display": {
+                  "type": "object",
+                  "properties": {
+                    "family": {
+                      "type": "string",
+                      "description": "Font family. Bundled with the engine (Google Fonts, OFL): Inter Tight, Geist, Geist Mono, Instrument Serif"
+                    },
+                    "files": {
+                      "default": [],
+                      "description": "Local files for a font that is not bundled. Keep licensed files out of public repositories",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string",
+                            "description": "Font file (woff2/ttf/otf), relative to this config file"
+                          },
+                          "weight": {
+                            "default": 400,
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "path"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "family"
+                  ],
+                  "description": "Titles and the outro call to action"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {
+                    "family": {
+                      "type": "string",
+                      "description": "Font family. Bundled with the engine (Google Fonts, OFL): Inter Tight, Geist, Geist Mono, Instrument Serif"
+                    },
+                    "files": {
+                      "default": [],
+                      "description": "Local files for a font that is not bundled. Keep licensed files out of public repositories",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string",
+                            "description": "Font file (woff2/ttf/otf), relative to this config file"
+                          },
+                          "weight": {
+                            "default": 400,
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "path"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "family"
+                  ],
+                  "description": "Subtitles and small text"
+                },
+                "mono": {
+                  "type": "object",
+                  "properties": {
+                    "family": {
+                      "type": "string",
+                      "description": "Font family. Bundled with the engine (Google Fonts, OFL): Inter Tight, Geist, Geist Mono, Instrument Serif"
+                    },
+                    "files": {
+                      "default": [],
+                      "description": "Local files for a font that is not bundled. Keep licensed files out of public repositories",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "path": {
+                            "type": "string",
+                            "description": "Font file (woff2/ttf/otf), relative to this config file"
+                          },
+                          "weight": {
+                            "default": 400,
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "path"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "family"
+                  ],
+                  "description": "Labels (eyebrow) when eyebrow is \"mono\""
+                },
+                "eyebrow": {
+                  "default": "spaced",
+                  "description": "\"spaced\" = wide-tracked caps in the body face · \"mono\" = monospaced caps",
+                  "type": "string",
+                  "enum": [
+                    "spaced",
+                    "mono"
+                  ]
+                },
+                "tracking": {
+                  "default": "-0.035em",
+                  "description": "Title letter-spacing",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "display",
+                "body",
+                "mono"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "brief": {
+      "default": {},
+      "description": "Answers from the /showcase interview, kept so the video can be remade the same way",
+      "type": "object",
+      "properties": {
+        "goal": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "highlights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tone": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "project"
+  ]
+}

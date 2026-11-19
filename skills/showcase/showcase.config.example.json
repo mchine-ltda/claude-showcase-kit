@@ -1,0 +1,187 @@
+{
+  "$schema": "../../schemas/showcase.config.schema.json",
+  "template": "v3-dynamic",
+  "project": {
+    "name": "Murphy's Bakery",
+    "url": "https://murphysbakery.ie",
+    "displayUrl": "murphysbakery.ie",
+    "category": "Artisan bakery",
+    "kind": "website",
+    "accent": "auto"
+  },
+  "source": {
+    "serve": null,
+    "start": null
+  },
+  "capture": {
+    "startPath": "",
+    "journeys": {
+      "desktop": [
+        {
+          "id": "home-scroll",
+          "do": "scroll",
+          "to": "best"
+        },
+        {
+          "id": "bakes-cut",
+          "do": "cut",
+          "to": "heading:Baked this morning"
+        },
+        {
+          "id": "menu-item",
+          "do": "link",
+          "text": "Sourdough",
+          "via": "Our bread"
+        },
+        {
+          "id": "menu-scroll",
+          "do": "scroll",
+          "to": "+760"
+        },
+        {
+          "id": "visit",
+          "do": "link",
+          "text": "Visit us"
+        },
+        {
+          "id": "visit-scroll",
+          "do": "scroll",
+          "to": "+420"
+        }
+      ],
+      "mobile": [
+        {
+          "id": "m-home-scroll",
+          "do": "scroll",
+          "to": "+520"
+        },
+        {
+          "id": "m-menu",
+          "do": "menu"
+        },
+        {
+          "id": "m-bread",
+          "do": "link",
+          "text": "Sourdough",
+          "scope": "menu"
+        },
+        {
+          "id": "m-bread-scroll",
+          "do": "scroll",
+          "to": "+460"
+        },
+        {
+          "id": "m-order",
+          "do": "link",
+          "prefer": "contact",
+          "scope": "page"
+        },
+        {
+          "id": "m-order-scroll",
+          "do": "scroll",
+          "to": "+560"
+        }
+      ]
+    },
+    "hide": [
+      "#cookie-banner",
+      ".chat-widget"
+    ],
+    "blur": [
+      ".staff-phone"
+    ]
+  },
+  "video": {
+    "format": "reel",
+    "eyebrow": "auto",
+    "title": "Murphy's *Bakery*",
+    "cta": null,
+    "timing": {
+      "intro": 1,
+      "desktop": 11,
+      "mobile": 11,
+      "outro": 1.5
+    },
+    "balance": true,
+    "subtitles": true,
+    "cover": {
+      "enabled": true,
+      "frame": null,
+      "time": null,
+      "showAgency": true
+    },
+    "output": "murphys-bakery-showcase.mp4"
+  },
+  "narration": {
+    "enabled": true,
+    "voice": {
+      "provider": "kokoro",
+      "voice": "bf_emma",
+      "speed": 1
+    },
+    "gapSeconds": 0.25,
+    "lines": [
+      {
+        "id": "intro",
+        "segment": "intro",
+        "text": "Meet Murphy's Bakery."
+      },
+      {
+        "id": "desktop-1",
+        "segment": "desktop",
+        "text": "A warm, modern website for a neighbourhood bakery."
+      },
+      {
+        "id": "desktop-2",
+        "segment": "desktop",
+        "step": "menu-item-open",
+        "text": "Visitors open the bread menu and go straight to today's loaves."
+      },
+      {
+        "id": "desktop-3",
+        "segment": "desktop",
+        "step": "visit",
+        "text": "And opening hours are one click away."
+      },
+      {
+        "id": "mobile-1",
+        "segment": "mobile",
+        "text": "On mobile, the layout adapts, with navigation that's easy to use."
+      },
+      {
+        "id": "mobile-2",
+        "segment": "mobile",
+        "step": "m-bread-scroll",
+        "text": "Every loaf has its own page, and ordering is one tap away."
+      },
+      {
+        "id": "mobile-3",
+        "segment": "mobile",
+        "step": "m-order-scroll",
+        "text": "Professional, on every screen."
+      },
+      {
+        "id": "outro",
+        "segment": "outro",
+        "text": "Want a website like this for your business?"
+      }
+    ]
+  },
+  "audio": {
+    "music": null,
+    "builtinMusic": true,
+    "sfx": true,
+    "musicVolume": 0.32,
+    "duckTo": 0.12
+  },
+  "brief": {
+    "goal": "Portfolio piece",
+    "highlights": [
+      "Bread menu",
+      "Visit us page",
+      "Mobile menu"
+    ],
+    "tone": "Confident and warm"
+  },
+  "agency": {}
+}

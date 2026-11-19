@@ -1,0 +1,202 @@
+<!doctype html>
+<!--
+  DEMO FIXTURE — Website Showcase Engine
+  "Saltmarsh Coffee Roasters" is a fictional business invented to demonstrate
+  the capture pipeline and video template. No real company, product, price,
+  address or review is represented here.
+-->
+<html lang="en-IE">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#F3EEE4" />
+  <meta name="description" content="Demo fixture: a fictional small-batch coffee roaster used to test the Website Showcase Engine." />
+  <title>Saltmarsh Coffee Roasters (Demo fixture)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="wrap header-row">
+      <a class="brand" href="#top" aria-label="Saltmarsh Coffee Roasters">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.6" />
+          <path d="M8 23c4-3 8-3 12 0s8 3 12 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          <path d="M8 28c4-3 8-3 12 0s8 3 12 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".55" />
+          <circle cx="20" cy="13" r="3.2" fill="currentColor" />
+        </svg>
+        <span>Saltmarsh</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="coffee.html">Coffee</a>
+        <a href="#process">Roastery</a>
+        <a href="#journal">Journal</a>
+        <a href="visit.html">Visit &amp; contact</a>
+      </nav>
+      <a class="btn btn-small header-cta" href="coffee.html">Shop beans</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="coffee.html"><span>01</span>Coffee</a>
+      <a href="#process"><span>02</span>Roastery</a>
+      <a href="#journal"><span>03</span>Journal</a>
+      <a href="visit.html"><span>04</span>Visit &amp; contact</a>
+    </nav>
+    <div class="mobile-menu-foot">
+      <a class="btn" href="coffee.html">Shop beans</a>
+      <p>Roasted weekly in a fictional harbour town.</p>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot"></span> Small-batch roastery · West of Ireland</p>
+          <h1 id="hero-title">Coffee roasted on the <em>Atlantic</em> edge.</h1>
+          <p class="lede">Seasonal single origins, roasted in small batches every Tuesday and delivered to your door within the week.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#coffee">Explore the coffee</a>
+            <a class="link-arrow" href="#process">Inside the roastery <span aria-hidden="true">→</span></a>
+          </div>
+          <dl class="hero-facts">
+            <div><dt>Roast day</dt><dd>Every Tuesday</dd></div>
+            <div><dt>Batch size</dt><dd>12 kg</dd></div>
+            <div><dt>Delivery</dt><dd>Island-wide</dd></div>
+          </dl>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="sea">
+            <i></i><i></i><i></i><i></i>
+          </div>
+          <div class="bag bag-hero">
+            <div class="bag-top"></div>
+            <div class="bag-label">
+              <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="M8 23c4-3 8-3 12 0s8 3 12 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" /><circle cx="20" cy="13" r="3" fill="currentColor" /></svg>
+              <strong>Inishmore</strong>
+              <span>Espresso · 250 g</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-label="Tasting notes">
+      <div class="marquee-track">
+        <span>Dark chocolate</span><span>·</span><span>Blood orange</span><span>·</span><span>Toasted hazelnut</span><span>·</span><span>Wild honey</span><span>·</span><span>Sea salt caramel</span><span>·</span><span>Stone fruit</span>
+      </div>
+    </section>
+
+    <section class="coffee" id="coffee" aria-labelledby="coffee-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow"><span class="dot"></span> This season</p>
+          <h2 id="coffee-title">Three coffees, roasted to order.</h2>
+        </div>
+        <div class="cards">
+          <article class="card" data-showcase="product">
+            <div class="card-art art-espresso"><div class="bag"><div class="bag-top"></div><div class="bag-label"><strong>Inishmore</strong><span>Espresso</span></div></div></div>
+            <div class="card-body">
+              <div class="card-row"><h3>Inishmore Espresso</h3><span class="price">€14</span></div>
+              <p>Brazil &amp; Ethiopia. Dark chocolate, blood orange, a long sweet finish.</p>
+              <div class="card-tags"><span>Espresso</span><span>Medium</span></div>
+              <a class="btn btn-block card-cta" href="#coffee">Add to bag</a>
+            </div>
+          </article>
+          <article class="card" data-showcase="product">
+            <div class="card-art art-filter"><div class="bag"><div class="bag-top"></div><div class="bag-label"><strong>Claddagh</strong><span>Filter</span></div></div></div>
+            <div class="card-body">
+              <div class="card-row"><h3>Claddagh Filter</h3><span class="price">€16</span></div>
+              <p>Washed Kenya. Blackcurrant, hibiscus and a bright, clean cup.</p>
+              <div class="card-tags"><span>Filter</span><span>Light</span></div>
+              <a class="btn btn-block card-cta" href="#coffee">Add to bag</a>
+            </div>
+          </article>
+          <article class="card" data-showcase="product">
+            <div class="card-art art-decaf"><div class="bag"><div class="bag-top"></div><div class="bag-label"><strong>Burren</strong><span>Decaf</span></div></div></div>
+            <div class="card-body">
+              <div class="card-row"><h3>Burren Decaf</h3><span class="price">€15</span></div>
+              <p>Sugarcane decaf Colombia. Toffee, red apple, all the comfort.</p>
+              <div class="card-tags"><span>All-rounder</span><span>Medium</span></div>
+              <a class="btn btn-block card-cta" href="#coffee">Add to bag</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="process" id="process" aria-labelledby="process-title">
+      <div class="wrap process-grid">
+        <div class="process-intro">
+          <p class="eyebrow light"><span class="dot"></span> The roastery</p>
+          <h2 id="process-title">Slow roasting, by hand and by ear.</h2>
+          <p>Every batch is profiled, cupped and logged before it leaves the roastery. If it isn't right, it doesn't ship.</p>
+        </div>
+        <ol class="steps">
+          <li><span class="step-n">01</span><div><h3>Sourced in season</h3><p>Green coffee bought from importers who publish what farmers are paid.</p></div></li>
+          <li><span class="step-n">02</span><div><h3>Roasted in small batches</h3><p>Twelve kilos at a time, so every roast can be tasted and tuned.</p></div></li>
+          <li><span class="step-n">03</span><div><h3>Rested, then shipped</h3><p>Beans rest for 48 hours, then go out in compostable bags.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="journal" id="journal" aria-labelledby="journal-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <h2 id="journal-title">From the roastery floor.</h2>
+          <a class="link-arrow" href="#journal">All stories <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="gallery">
+          <figure class="tile t1"><div class="tile-art"></div><figcaption>Morning cupping</figcaption></figure>
+          <figure class="tile t2"><div class="tile-art"></div><figcaption>The 12 kg drum</figcaption></figure>
+          <figure class="tile t3"><div class="tile-art"></div><figcaption>Harbour deliveries</figcaption></figure>
+          <figure class="tile t4"><div class="tile-art"></div><figcaption>Green coffee, in season</figcaption></figure>
+          <figure class="tile t5"><div class="tile-art"></div><figcaption>Pour-over bar</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote" aria-label="Sample quote">
+      <div class="wrap">
+        <blockquote>
+          <p>“The kind of coffee that makes you slow down and actually taste the morning.”</p>
+          <footer>Sample review text — demo fixture</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="visit-title">
+      <div class="wrap visit-grid">
+        <div>
+          <p class="eyebrow"><span class="dot"></span> Visit</p>
+          <h2 id="visit-title">Come by the roastery bar.</h2>
+          <p class="lede">Fresh pours, beans to take home and a seat by the window. Opening hours below are placeholder content.</p>
+        </div>
+        <div class="hours">
+          <div><span>Tuesday – Friday</span><span>8:00 – 16:00</span></div>
+          <div><span>Saturday</span><span>9:00 – 17:00</span></div>
+          <div><span>Sunday</span><span>10:00 – 15:00</span></div>
+          <a class="btn" href="visit.html">Contact the roastery</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span class="brand small">Saltmarsh</span>
+      <p class="demo-label">Demo fixture for Website Showcase Engine. Saltmarsh Coffee Roasters is a fictional business.</p>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

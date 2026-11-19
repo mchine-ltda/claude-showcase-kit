@@ -1,0 +1,157 @@
+{
+  "$schema": "../../schemas/showcase.config.schema.json",
+  "template": "v3-dynamic",
+  "project": {
+    "name": "Saltmarsh Coffee Roasters",
+    "url": "",
+    "displayUrl": "saltmarsh-coffee.demo",
+    "category": "Hospitality",
+    "accent": "auto",
+    "demo": true
+  },
+  "source": {
+    "serve": "../../fixtures/demo-site",
+    "start": null
+  },
+  "capture": {
+    "journeys": {
+      "desktop": [
+        {
+          "id": "home-scroll",
+          "do": "scroll",
+          "to": "best"
+        },
+        {
+          "id": "coffee",
+          "do": "link",
+          "text": "Coffee",
+          "scope": "header"
+        },
+        {
+          "id": "coffee-scroll",
+          "do": "scroll",
+          "to": "best"
+        },
+        {
+          "id": "visit",
+          "do": "link",
+          "text": "Visit",
+          "scope": "header"
+        },
+        {
+          "id": "visit-scroll",
+          "do": "scroll",
+          "to": "best"
+        }
+      ],
+      "mobile": [
+        {
+          "id": "m-home-scroll",
+          "do": "scroll",
+          "to": "best"
+        },
+        {
+          "id": "m-menu",
+          "do": "menu"
+        },
+        {
+          "id": "m-coffee",
+          "do": "link",
+          "text": "Coffee",
+          "scope": "menu"
+        },
+        {
+          "id": "m-coffee-scroll",
+          "do": "scroll",
+          "to": "best"
+        },
+        {
+          "id": "m-menu-2",
+          "do": "menu"
+        },
+        {
+          "id": "m-visit",
+          "do": "link",
+          "text": "Visit",
+          "scope": "menu"
+        },
+        {
+          "id": "m-visit-scroll",
+          "do": "scroll",
+          "to": "+420"
+        }
+      ]
+    },
+    "hide": [],
+    "blur": []
+  },
+  "video": {
+    "format": "reel",
+    "eyebrow": "auto",
+    "timing": {
+      "intro": 1,
+      "desktop": 11,
+      "mobile": 11,
+      "outro": 1.5
+    },
+    "balance": true,
+    "subtitles": true,
+    "cover": {
+      "enabled": true
+    },
+    "output": "demo-saltmarsh-v3-cover.mp4"
+  },
+  "narration": {
+    "enabled": true,
+    "voice": {
+      "provider": "kokoro",
+      "voice": "bf_emma",
+      "speed": 1
+    },
+    "lines": [
+      {
+        "id": "intro",
+        "segment": "intro",
+        "text": "Meet Saltmarsh Coffee Roasters."
+      },
+      {
+        "id": "desktop-1",
+        "segment": "desktop",
+        "text": "A warm, editorial website for a small-batch roastery."
+      },
+      {
+        "id": "desktop-2",
+        "segment": "desktop",
+        "step": "coffee",
+        "text": "Visitors can browse this season's coffee, and find the roastery bar in a couple of clicks."
+      },
+      {
+        "id": "mobile-1",
+        "segment": "mobile",
+        "text": "On mobile, the layout adapts, with a full-screen menu."
+      },
+      {
+        "id": "mobile-2",
+        "segment": "mobile",
+        "step": "m-visit",
+        "text": "Opening hours and the contact form are always a tap away."
+      },
+      {
+        "id": "mobile-3",
+        "segment": "mobile",
+        "text": "Professional, on every screen."
+      },
+      {
+        "id": "outro",
+        "segment": "outro",
+        "text": "Want a website like this for your business?"
+      }
+    ]
+  },
+  "audio": {
+    "music": null,
+    "builtinMusic": true,
+    "sfx": true
+  },
+  "agency": {}
+}

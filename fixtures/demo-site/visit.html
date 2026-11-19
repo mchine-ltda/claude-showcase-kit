@@ -1,0 +1,113 @@
+<!doctype html>
+<!--
+  DEMO FIXTURE — Website Showcase Engine
+  "Saltmarsh Coffee Roasters" is a fictional business invented to demonstrate
+  the capture pipeline and video template. No real company, product, price,
+  address or review is represented here.
+-->
+<html lang="en-IE">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#F3EEE4" />
+  <meta name="description" content="Demo fixture: a fictional small-batch coffee roaster used to test the Website Showcase Engine." />
+  <title>Visit and contact · Saltmarsh Coffee Roasters (Demo fixture)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="wrap header-row">
+      <a class="brand" href="index.html" aria-label="Saltmarsh Coffee Roasters">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.6" />
+          <path d="M8 23c4-3 8-3 12 0s8 3 12 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          <path d="M8 28c4-3 8-3 12 0s8 3 12 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".55" />
+          <circle cx="20" cy="13" r="3.2" fill="currentColor" />
+        </svg>
+        <span>Saltmarsh</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="coffee.html">Coffee</a>
+        <a href="index.html#process">Roastery</a>
+        <a href="index.html#journal">Journal</a>
+        <a href="visit.html">Visit &amp; contact</a>
+      </nav>
+      <a class="btn btn-small header-cta" href="coffee.html">Shop beans</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="coffee.html"><span>01</span>Coffee</a>
+      <a href="index.html#process"><span>02</span>Roastery</a>
+      <a href="index.html#journal"><span>03</span>Journal</a>
+      <a href="visit.html"><span>04</span>Visit &amp; contact</a>
+    </nav>
+    <div class="mobile-menu-foot">
+      <a class="btn" href="coffee.html">Shop beans</a>
+      <p>Roasted weekly in a fictional harbour town.</p>
+    </div>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow"><span class="dot"></span> Visit &amp; contact</p>
+        <h1>Come by, or <em>drop us a line.</em></h1>
+        <p class="lede">The roastery bar is open six days a week. Address and hours here are placeholder content.</p>
+      </div>
+    </section>
+    <section class="visit" id="contact">
+      <div class="wrap visit-grid">
+        <form class="contact-form" onsubmit="return false" aria-label="Contact form (demo, does not send)">
+          <label>Name<input type="text" placeholder="Your name" /></label>
+          <label>Email<input type="email" placeholder="you@example.ie" /></label>
+          <label>Message<textarea rows="4" placeholder="Wholesale, gifts, a question about a coffee"></textarea></label>
+          <button class="btn" type="submit">Send message</button>
+          <p class="form-note">Demo form: nothing is sent.</p>
+        </form>
+        <div class="hours">
+          <div><span>Tuesday to Friday</span><span>8:00 to 16:00</span></div>
+          <div><span>Saturday</span><span>9:00 to 17:00</span></div>
+          <div><span>Sunday</span><span>10:00 to 15:00</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="find-us" aria-labelledby="find-title">
+      <div class="wrap find-grid">
+        <div class="map-art" aria-hidden="true"><i class="coast"></i><i class="road"></i><span class="pin"></span></div>
+        <div>
+          <p class="eyebrow"><span class="dot"></span> Find us</p>
+          <h2 id="find-title">On the harbour road, past the old pier.</h2>
+          <p class="lede">Placeholder location for the demo. Parking on the quay, bike racks by the door.</p>
+        </div>
+      </div>
+    </section>
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">Good to know</h2>
+        <div class="faq-list">
+          <div><h3>Do you sell wholesale?</h3><p>Yes, to cafés and offices. Ask through the form above.</p></div>
+          <div><h3>Can I order beans for collection?</h3><p>Order by Monday and collect from the bar on Tuesday afternoon.</p></div>
+          <div><h3>Do you run cupping sessions?</h3><p>Every first Saturday of the month, free and open to everyone.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span class="brand small">Saltmarsh</span>
+      <p class="demo-label">Demo fixture for Website Showcase Engine. Saltmarsh Coffee Roasters is a fictional business.</p>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

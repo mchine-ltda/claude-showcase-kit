@@ -1,0 +1,60 @@
+{
+  "generator": "engine/audio/synth-sfx.ts",
+  "sampleRate": 48000,
+  "sounds": {
+    "whoosh-soft": {
+      "file": "whoosh-soft.wav",
+      "seconds": 0.9,
+      "peakDbfs": -7,
+      "description": "short air pass for text reveals and soft cuts"
+    },
+    "whoosh-long": {
+      "file": "whoosh-long.wav",
+      "seconds": 1.5,
+      "peakDbfs": -5,
+      "description": "longer pass for device entrances"
+    },
+    "impact-soft": {
+      "file": "impact-soft.wav",
+      "seconds": 1.6,
+      "peakDbfs": -4,
+      "description": "low, soft landing thump for objects settling"
+    },
+    "riser": {
+      "file": "riser.wav",
+      "seconds": 1.8,
+      "peakDbfs": -8,
+      "description": "filtered build into the wordmark"
+    },
+    "chime": {
+      "file": "chime.wav",
+      "seconds": 2.6,
+      "peakDbfs": -9,
+      "description": "gentle glass bell for the agency signature"
+    },
+    "click": {
+      "file": "click.wav",
+      "seconds": 0.25,
+      "peakDbfs": -10,
+      "description": "mouse click (press and release)"
+    },
+    "tap": {
+      "file": "tap.wav",
+      "seconds": 0.3,
+      "peakDbfs": -12,
+      "description": "muted touch tick"
+    },
+    "swipe": {
+      "file": "swipe.wav",
+      "seconds": 0.6,
+      "peakDbfs": -14,
+      "description": "light airy scroll gesture"
+    },
+    "ambient-bed": {
+      "file": "ambient-bed.wav",
+      "seconds": 16,
+      "peakDbfs": -16,
+      "description": "optional evolving pad, loops every 16 s"
+    }
+  }
+}
