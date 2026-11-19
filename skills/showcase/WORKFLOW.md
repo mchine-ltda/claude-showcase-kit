@@ -148,14 +148,14 @@ line. Then write `narration.lines`: 7–8 short lines, about 20 s of speech.
 |---|---|
 | intro | "Meet <Client>." |
 | walkthrough | An opener · one line per highlight, tied to its step (`"step": "<id>"`) · a short closer |
-| outro | "Want a <noun> like this for your business?" |
+| outro | "Want a <noun> like this for your business? Send us a message." |
 
 ```bash
 SC narrate <slug>
 ```
 
-This voices each line (cached) and prints the timings. Target about 25 s; desktop and mobile get equal
-time. A long part means shorter lines, never a faster voice.
+This voices each line (cached) and prints the timings. Target 25–28 s (the outro is 3.6 s); desktop
+and mobile get equal time. A long part means shorter lines, never a faster voice.
 
 ## 8. Review, interview round 3
 

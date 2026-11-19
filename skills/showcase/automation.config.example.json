@@ -10,44 +10,135 @@
     "accent": "auto"
   },
   "capture": {
-    "devices": ["desktop"],
+    "devices": [
+      "desktop"
+    ],
     "auth": "auth/session.json",
-    "hostLabels": { "app.n8n.cloud": "n8n", "mail.google.com": "Gmail" },
+    "hostLabels": {
+      "app.n8n.cloud": "n8n",
+      "mail.google.com": "Gmail"
+    },
     "journeys": {
       "desktop": [
-        { "id": "form", "do": "goto", "path": "https://murphysbakery.ie/order" },
-        { "id": "name", "do": "type", "selector": "#name", "text": "Aoife Byrne" },
-        { "id": "email", "do": "type", "selector": "#email", "text": "aoife@example.com" },
-        { "id": "order", "do": "type", "selector": "#message", "text": "Two sourdough loaves for Friday, please." },
-        { "id": "send", "do": "click", "selector": "button[type=submit]" },
-        { "id": "run", "do": "wait", "ms": 6000 },
-        { "id": "workflow", "do": "goto", "path": "https://app.n8n.cloud/workflow/123/executions" },
-        { "id": "inbox", "do": "goto", "path": "https://mail.google.com/mail/u/0/#inbox" },
-        { "id": "inbox-scroll", "do": "scroll", "to": "+300" }
+        {
+          "id": "form",
+          "do": "goto",
+          "path": "https://murphysbakery.ie/order"
+        },
+        {
+          "id": "name",
+          "do": "type",
+          "selector": "#name",
+          "text": "Aoife Byrne"
+        },
+        {
+          "id": "email",
+          "do": "type",
+          "selector": "#email",
+          "text": "aoife@example.com"
+        },
+        {
+          "id": "order",
+          "do": "type",
+          "selector": "#message",
+          "text": "Two sourdough loaves for Friday, please."
+        },
+        {
+          "id": "send",
+          "do": "click",
+          "selector": "button[type=submit]"
+        },
+        {
+          "id": "run",
+          "do": "wait",
+          "ms": 6000
+        },
+        {
+          "id": "workflow",
+          "do": "goto",
+          "path": "https://app.n8n.cloud/workflow/123/executions"
+        },
+        {
+          "id": "inbox",
+          "do": "goto",
+          "path": "https://mail.google.com/mail/u/0/#inbox"
+        },
+        {
+          "id": "inbox-scroll",
+          "do": "scroll",
+          "to": "+300"
+        }
       ]
     },
-    "blur": [".email-address", "[data-testid=avatar]"]
+    "blur": [
+      ".email-address",
+      "[data-testid=avatar]"
+    ]
   },
   "video": {
     "title": "Murphy's *Bakery*",
-    "cover": { "enabled": true },
-    "output": "murphys-lead-followup.mp4"
+    "cover": {
+      "enabled": true
+    },
+    "output": "murphys-lead-followup.mp4",
+    "timing": {
+      "outro": 3.6
+    }
   },
   "narration": {
-    "voice": { "provider": "kokoro", "voice": "bf_emma", "speed": 1 },
+    "voice": {
+      "provider": "kokoro",
+      "voice": "bf_emma",
+      "speed": 1
+    },
     "lines": [
-      { "id": "intro", "segment": "intro", "text": "Meet Murphy's Bakery." },
-      { "id": "d-1", "segment": "desktop", "text": "Every order on the website starts an automation." },
-      { "id": "d-2", "segment": "desktop", "step": "send", "text": "The customer sends their order, and that's all they do." },
-      { "id": "d-3", "segment": "desktop", "step": "workflow", "text": "The workflow checks the details and books the collection." },
-      { "id": "d-4", "segment": "desktop", "step": "inbox", "text": "A confirmation lands in the inbox, within seconds." },
-      { "id": "d-5", "segment": "desktop", "text": "No copying, no missed orders." },
-      { "id": "outro", "segment": "outro", "text": "Want an automation like this for your business?" }
+      {
+        "id": "intro",
+        "segment": "intro",
+        "text": "Meet Murphy's Bakery."
+      },
+      {
+        "id": "d-1",
+        "segment": "desktop",
+        "text": "Every order on the website starts an automation."
+      },
+      {
+        "id": "d-2",
+        "segment": "desktop",
+        "step": "send",
+        "text": "The customer sends their order, and that's all they do."
+      },
+      {
+        "id": "d-3",
+        "segment": "desktop",
+        "step": "workflow",
+        "text": "The workflow checks the details and books the collection."
+      },
+      {
+        "id": "d-4",
+        "segment": "desktop",
+        "step": "inbox",
+        "text": "A confirmation lands in the inbox, within seconds."
+      },
+      {
+        "id": "d-5",
+        "segment": "desktop",
+        "text": "No copying, no missed orders."
+      },
+      {
+        "id": "outro",
+        "segment": "outro",
+        "text": "Want an automation like this for your business? Send us a message."
+      }
     ]
   },
   "brief": {
     "goal": "Portfolio piece",
-    "highlights": ["Order form", "Workflow run", "Confirmation email"],
+    "highlights": [
+      "Order form",
+      "Workflow run",
+      "Confirmation email"
+    ],
     "tone": "Confident and warm"
   },
   "agency": {}

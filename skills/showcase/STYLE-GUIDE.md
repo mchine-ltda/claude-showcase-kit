@@ -68,7 +68,7 @@ The stage glow hands over from the project's accent to the agency's accent as th
 |---|---|---|---|
 | Cover lockup | ~1.2 s | ~1.2 s | ~1.2 s |
 | Walkthrough | desktop ~11.4 s + mobile ~11.4 s | mobile ~20 s | desktop ~20 s |
-| Outro | ~1.8 s | ~1.8 s | ~1.8 s |
+| Outro | ~3.6 s | ~3.6 s | ~3.6 s |
 
 **Transitions**
 - a depth dissolve into the walkthrough and into the outro (10 frames);
@@ -102,7 +102,8 @@ The stage glow hands over from the project's accent to the agency's accent as th
   - an opener;
   - one line per highlight;
   - a short closer;
-  - "Want a <website|web app|app|automation|brand> like this for your business?"
+  - "Want a <website|web app|app|automation|brand> like this for your business? Send us a message."
+    It starts as the device leaves; the outro holds the CTA and signature for about a second after it.
 
 ## Audio mix
 

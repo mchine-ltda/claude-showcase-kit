@@ -65,9 +65,11 @@ export const runQa = async (videoFile: string, props: ShowcaseProps, outDir: str
 		const ms = m.slotFrames / fps;
 		add('desktop/mobile balance', Math.abs(ds - ms) / Math.max(ds, ms) < 0.1, `desktop ${ds.toFixed(2)} s · mobile ${ms.toFixed(2)} s`, 'warn');
 	}
+	// Short bookends: a quick intro, and an outro long enough for the closing question and signature.
+	const bookendMax = { intro: 3.2, outro: 4.2 };
 	for (const k of ['intro', 'outro'] as const) {
 		const s = seg(k);
-		if (s) add(`${k} length`, s.slotFrames / fps <= 3.2, `${(s.slotFrames / fps).toFixed(2)} s`, 'warn');
+		if (s) add(`${k} length`, s.slotFrames / fps <= bookendMax[k], `${(s.slotFrames / fps).toFixed(2)} s (max ${bookendMax[k]} s)`, 'warn');
 	}
 	for (const k of ['desktop', 'mobile'] as const) {
 		const plans = tl.steps[k];

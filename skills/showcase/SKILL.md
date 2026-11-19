@@ -89,8 +89,9 @@ first capture if that helps):
 3. **Voice?** British female, Kokoro `bf_emma` (Recommended: the approved voice) · British male,
    Kokoro `bm_george` · A cloud voice. Only offer a cloud voice if `SC voices` shows it is
    configured.
-4. **Closing line?** "Want a <website|web app|app|automation|brand> like this for your business?"
-   (Recommended) · Their own line.
+4. **Closing line?** "Want a <website|web app|app|automation|brand> like this for your business? Send
+   us a message." (Recommended) · Their own line. Keep it to about 3.5 s: the 3.6 s outro holds the
+   signature for a second after it.
 
 **Round 3: approval, before rendering.** Show the user:
 - a storyboard table: part, seconds, what is on screen, the narration line;

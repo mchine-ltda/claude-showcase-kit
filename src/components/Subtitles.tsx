@@ -13,7 +13,9 @@ export const chunkLine = (text: string, maxWords = 8, maxChars = 40) => {
 	let cur: string[] = [];
 	for (const w of words) {
 		const next = [...cur, w].join(' ');
-		if (cur.length && (cur.length >= maxWords || next.length > maxChars)) {
+		// A word that ends the sentence may run a little long rather than be left on its own.
+		const fits = next.length <= maxChars || (/[.?!]$/.test(w) && next.length <= maxChars + 6);
+		if (cur.length && (cur.length >= maxWords || !fits)) {
 			chunks.push(cur.join(' '));
 			cur = [];
 		}

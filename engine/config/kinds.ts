@@ -11,7 +11,10 @@ export type KindSpec = {
 	/** What the narration calls it: "a modern website", "this automation". */
 	noun: string;
 	devices: ('desktop' | 'mobile')[];
-	/** Minimum seconds per part on top of the template's defaults (single-device kinds get one longer part). */
+	/**
+	 * Minimum seconds per part on top of the template's defaults (single-device kinds get one longer part).
+	 * Every kind ends on a 3.6 s outro, so the closing question and the signature both have time to read.
+	 */
 	timing: Partial<Record<'intro' | 'desktop' | 'mobile' | 'outro', number>>;
 	/** What a typical walkthrough shows, for the skill's interview and the docs. */
 	shows: string;
@@ -22,35 +25,35 @@ export const KINDS: Record<KindId, KindSpec> = {
 		label: 'Website',
 		noun: 'website',
 		devices: ['desktop', 'mobile'],
-		timing: {},
+		timing: { outro: 3.6 },
 		shows: 'Home page, a strong section, the menu, a service or product page, projects, the mobile menu and the contact form',
 	},
 	'web-app': {
 		label: 'Web app',
 		noun: 'web app',
 		devices: ['desktop', 'mobile'],
-		timing: {},
+		timing: { outro: 3.6 },
 		shows: 'The dashboard, opening a record, a real action (create, filter, update) and its result, and the responsive view',
 	},
 	app: {
 		label: 'App',
 		noun: 'app',
 		devices: ['mobile'],
-		timing: { mobile: 20 },
+		timing: { mobile: 20, outro: 3.6 },
 		shows: 'The app on a phone: onboarding or home, the main flow, a real action and its result',
 	},
 	automation: {
 		label: 'Automation',
 		noun: 'automation',
 		devices: ['desktop'],
-		timing: { desktop: 20 },
+		timing: { desktop: 20, outro: 3.6 },
 		shows: 'The trigger (a form, an email, a new row), the workflow running, and the result in each app it touches, joined by cuts',
 	},
 	branding: {
 		label: 'Branding',
 		noun: 'brand identity',
 		devices: ['desktop'],
-		timing: { desktop: 20 },
+		timing: { desktop: 20, outro: 3.6 },
 		shows: 'The brand guidelines or brand site: logo, palette, typography and applications, with cuts between sections',
 	},
 };

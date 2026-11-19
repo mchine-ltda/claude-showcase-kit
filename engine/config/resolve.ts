@@ -129,7 +129,7 @@ export const defaultScript = (config: ProjectConfig, manifest: CaptureManifest |
 		lines.push({ id: `${seg}-1`, segment: seg, text: opening[kindId] ?? `A modern ${noun} for ${name}.`, step: null });
 		lines.push({ id: `${seg}-2`, segment: seg, text: kindId === 'automation' ? "Here's how it works, step by step." : 'Every detail is built to work together.', step: null });
 	}
-	lines.push({ id: 'outro', segment: 'outro', text: `Want ${an} ${noun === 'brand identity' ? 'brand' : noun} like this for your business?`, step: null });
+	lines.push({ id: 'outro', segment: 'outro', text: `Want ${an} ${noun === 'brand identity' ? 'brand' : noun} like this for your business? Send us a message.`, step: null });
 	return lines;
 };
 

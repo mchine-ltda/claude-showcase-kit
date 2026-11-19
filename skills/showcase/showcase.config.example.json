@@ -100,7 +100,7 @@
       "intro": 1,
       "desktop": 11,
       "mobile": 11,
-      "outro": 1.5
+      "outro": 3.6
     },
     "balance": true,
     "subtitles": true,
@@ -163,7 +163,7 @@
       {
         "id": "outro",
         "segment": "outro",
-        "text": "Want a website like this for your business?"
+        "text": "Want a website like this for your business? Send us a message."
       }
     ]
   },
